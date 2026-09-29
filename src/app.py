@@ -12,6 +12,16 @@ proximo_id = 1
 @app.route("/")
 def inicio():
     """Exibe a página principal com todas as tarefas."""
+    
+       prioridade_filtro = request.args.get("prioridade")
+
+    if prioridade_filtro:
+        tarefas_exibidas = [
+            tarefa for tarefa in tarefas
+            if tarefa["prioridade"] == prioridade_filtro
+        ]
+    else:
+        tarefas_exibidas = tarefas
     html = """
     <!DOCTYPE html>
     <html lang="pt-BR">
@@ -70,6 +80,16 @@ def inicio():
         <form method="POST" action="/criar">
             <h2>Nova tarefa</h2>
 
+              <select name="prioridade">
+        <option value="">Todas</option>
+        <option value="Alta">Alta</option>
+        <option value="Média">Média</option>
+        <option value="Baixa">Baixa</option>
+    </select>
+
+    <button type="submit">Filtrar</button>
+</form>
+
             <input
                 type="text"
                 name="titulo"
@@ -93,10 +113,10 @@ def inicio():
         </form>
     """
 
-    if tarefas:
+    if tarefas_exibidas:
         html += "<h2>Tarefas cadastradas</h2>"
 
-        for tarefa in tarefas:
+        for tarefa in tarefas_exibidas:
             prioridade = tarefa["prioridade"].lower()
             html += f"""
             <div class="tarefa {prioridade}">

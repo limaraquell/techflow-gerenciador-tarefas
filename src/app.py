@@ -12,22 +12,25 @@ proximo_id = 1
 @app.route("/")
 def inicio():
     """Exibe a página principal com todas as tarefas."""
-    
-       prioridade_filtro = request.args.get("prioridade")
+
+    prioridade_filtro = request.args.get("prioridade")
 
     if prioridade_filtro:
         tarefas_exibidas = [
-            tarefa for tarefa in tarefas
+            tarefa
+            for tarefa in tarefas
             if tarefa["prioridade"] == prioridade_filtro
         ]
     else:
         tarefas_exibidas = tarefas
+
     html = """
     <!DOCTYPE html>
     <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
         <title>TechFlow - Gerenciador de Tarefas</title>
+
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -75,20 +78,24 @@ def inicio():
     </head>
 
     <body>
+
         <h1>TechFlow - Gerenciador de Tarefas</h1>
+
+        <form method="GET" action="/">
+            <h2>Filtrar por prioridade</h2>
+
+            <select name="prioridade">
+                <option value="">Todas</option>
+                <option value="Alta">Alta</option>
+                <option value="Média">Média</option>
+                <option value="Baixa">Baixa</option>
+            </select>
+
+            <button type="submit">Filtrar</button>
+        </form>
 
         <form method="POST" action="/criar">
             <h2>Nova tarefa</h2>
-
-              <select name="prioridade">
-        <option value="">Todas</option>
-        <option value="Alta">Alta</option>
-        <option value="Média">Média</option>
-        <option value="Baixa">Baixa</option>
-    </select>
-
-    <button type="submit">Filtrar</button>
-</form>
 
             <input
                 type="text"
@@ -118,14 +125,18 @@ def inicio():
 
         for tarefa in tarefas_exibidas:
             prioridade = tarefa["prioridade"].lower()
+
             html += f"""
             <div class="tarefa {prioridade}">
                 <h3>{tarefa["titulo"]}</h3>
+
                 <p>{tarefa["descricao"]}</p>
+
                 <p>
                     <strong>Prioridade:</strong>
                     {tarefa["prioridade"]}
                 </p>
+
                 <p>
                     <strong>Status:</strong>
                     {tarefa["status"]}
@@ -134,12 +145,15 @@ def inicio():
                 <a href="/concluir/{tarefa['id']}">
                     Marcar como concluída
                 </a>
+
                 |
+
                 <a href="/excluir/{tarefa['id']}">
                     Excluir
                 </a>
             </div>
             """
+
     else:
         html += "<p>Nenhuma tarefa cadastrada.</p>"
 
@@ -177,14 +191,18 @@ def criar_tarefa():
 @app.route("/concluir/<int:tarefa_id>")
 def concluir_tarefa(tarefa_id):
     """Altera o status de uma tarefa para concluída."""
+
     for tarefa in tarefas:
         if tarefa["id"] == tarefa_id:
             tarefa["status"] = "Concluída"
 
     return redirect("/")
+
+
 @app.route("/editar/<int:tarefa_id>", methods=["POST"])
 def editar_tarefa(tarefa_id):
     """Atualiza os dados de uma tarefa."""
+
     for tarefa in tarefas:
         if tarefa["id"] == tarefa_id:
             tarefa["titulo"] = request.form.get("titulo")
@@ -193,9 +211,6 @@ def editar_tarefa(tarefa_id):
 
     return redirect("/")
 
-if __name__ == "__main__":
-    app.run(debug=True)
-    
 
 @app.route("/excluir/<int:tarefa_id>")
 def excluir_tarefa(tarefa_id):
@@ -203,7 +218,8 @@ def excluir_tarefa(tarefa_id):
     global tarefas
 
     tarefas = [
-        tarefa for tarefa in tarefas
+        tarefa
+        for tarefa in tarefas
         if tarefa["id"] != tarefa_id
     ]
 

@@ -162,7 +162,20 @@ def concluir_tarefa(tarefa_id):
             tarefa["status"] = "Concluída"
 
     return redirect("/")
+@app.route("/editar/<int:tarefa_id>", methods=["POST"])
+def editar_tarefa(tarefa_id):
+    """Atualiza os dados de uma tarefa."""
+    for tarefa in tarefas:
+        if tarefa["id"] == tarefa_id:
+            tarefa["titulo"] = request.form.get("titulo")
+            tarefa["descricao"] = request.form.get("descricao")
+            tarefa["prioridade"] = request.form.get("prioridade")
 
+    return redirect("/")
+
+if __name__ == "__main__":
+    app.run(debug=True)
+    
 
 @app.route("/excluir/<int:tarefa_id>")
 def excluir_tarefa(tarefa_id):

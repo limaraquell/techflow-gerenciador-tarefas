@@ -65,3 +65,36 @@ def test_excluir_tarefa():
     resposta = cliente.get("/excluir/1")
 
     assert resposta.status_code == 302
+
+def test_editar_tarefa():
+    """Verifica se uma tarefa pode ser atualizada."""
+    from app import tarefas
+
+    cliente = app.test_client()
+
+    tarefas.clear()
+
+    cliente.post(
+        "/criar",
+        data={
+            "titulo": "Tarefa original",
+            "descricao": "Descrição original",
+            "prioridade": "Baixa"
+        }
+    )
+
+    tarefa_id = tarefas[-1]["id"]
+
+    resposta = cliente.post(
+        f"/editar/{tarefa_id}",
+        data={
+            "titulo": "Tarefa atualizada",
+            "descricao": "Nova descrição",
+            "prioridade": "Alta"
+        }
+    )
+
+    assert resposta.status_code == 302
+    assert tarefas[-1]["titulo"] == "Tarefa atualizada"
+    assert tarefas[-1]["descricao"] == "Nova descrição"
+    assert tarefas[-1]["prioridade"] == "Alta"

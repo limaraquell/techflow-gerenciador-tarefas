@@ -98,3 +98,35 @@ def test_editar_tarefa():
     assert tarefas[-1]["titulo"] == "Tarefa atualizada"
     assert tarefas[-1]["descricao"] == "Nova descrição"
     assert tarefas[-1]["prioridade"] == "Alta"
+
+def test_filtrar_tarefas_por_prioridade():
+    """Verifica se o filtro retorna apenas a prioridade selecionada."""
+    from app import tarefas
+
+    cliente = app.test_client()
+
+    tarefas.clear()
+
+    cliente.post(
+        "/criar",
+        data={
+            "titulo": "Tarefa urgente",
+            "descricao": "Pedido prioritário",
+            "prioridade": "Alta"
+        }
+    )
+
+    cliente.post(
+        "/criar",
+        data={
+            "titulo": "Tarefa normal",
+            "descricao": "Pedido comum",
+            "prioridade": "Baixa"
+        }
+    )
+
+    resposta = cliente.get("/?prioridade=Alta")
+
+    assert resposta.status_code == 200
+    assert b"Tarefa urgente" in resposta.data
+    assert b"Tarefa normal" not in resposta.data

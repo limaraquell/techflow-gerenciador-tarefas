@@ -50,3 +50,29 @@ techflow-gerenciador-tarefas/
 ├── tests/
 │   └── test_tarefas.py
 └── README.md
+## Mudança de escopo
+
+Durante o desenvolvimento do projeto, foi identificada a necessidade de facilitar a localização de tarefas críticas pela equipe da startup de logística.
+
+Por esse motivo, o escopo inicial foi ampliado para incluir a funcionalidade de **filtro de tarefas por prioridade**.
+
+A mudança foi registrada no quadro Kanban por meio de um novo card e posteriormente implementada no sistema.
+
+Após a implementação, foi criado um teste automatizado específico para verificar o funcionamento do filtro. O GitHub Actions executou os testes e confirmou que a alteração estava funcionando corretamente.
+
+A alteração foi concluída e o card correspondente foi movido para a coluna **Done** no Kanban.
+
+### Escopo inicial
+
+- Criar tarefas;
+- Listar tarefas;
+- Atualizar tarefas;
+- Excluir tarefas;
+- Definir status;
+- Definir prioridade.
+
+### Nova funcionalidade adicionada
+
+- Filtrar tarefas por prioridade (Alta, Média ou Baixa).
+
+A mudança demonstra a capacidade do projeto de se adaptar a uma nova necessidade sem perder o controle sobre o desenvolvimento, os testes e o histórico de alterações.

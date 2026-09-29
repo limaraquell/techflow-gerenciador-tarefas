@@ -42,15 +42,17 @@ O quadro será dividido em três etapas:
 
 ## Estrutura do projeto
 
-```text
+text
 techflow-gerenciador-tarefas/
-├── docs/
-├── src/
-│   └── app.py
-├── tests/
-│   └── test_tarefas.py
-└── README.md
-## Mudança de escopo
+-docs/
+- src/
+   └── app.py
+- tests/
+   └── test_tarefas.py
+- README.md. 
+
+
+## Mudança de escopo 
 
 Durante o desenvolvimento do projeto, foi identificada a necessidade de facilitar a localização de tarefas críticas pela equipe da startup de logística.
 
@@ -76,3 +78,4 @@ A alteração foi concluída e o card correspondente foi movido para a coluna **
 - Filtrar tarefas por prioridade (Alta, Média ou Baixa).
 
 A mudança demonstra a capacidade do projeto de se adaptar a uma nova necessidade sem perder o controle sobre o desenvolvimento, os testes e o histórico de alterações.
+
